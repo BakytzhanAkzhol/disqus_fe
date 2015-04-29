@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-  <head>
+<head>
   <meta charset="utf-8">
   <!-- build:css styles/vendor.css -->
   <!-- bower:css -->
@@ -12,9 +12,8 @@
   <!-- build:css styles/main.css -->
   <link href="styles/main.css" rel="stylesheet">
   <!-- endbuild -->
-  </head>
-  <body>
-
+</head>
+<body>
 
   <!-- build:js scripts/vendor.js -->
   <!-- bower:js -->
@@ -26,8 +25,57 @@
   <!-- endbower -->
   <!-- endbuild -->
 
+  <div id="container"></div>
+</body>
   <!-- build:js scripts/popup.js -->
+  <script id='template' type='text/ractive'>
+  <div class="container" style="margin-left:10px;margin-right:10px">
+    <h3>SDU Disqus</h3>
+   <div class="row" >
+      <div class="panel panel-info">
+        <div class="panel-heading">
+       
+          <h3  class="panel-title">Who are you?</h3>
+        </div>
+        <div class="panel-body">
+          <input type="email" class="form-control" id="inputEmail" placeholder="Your Email">
+          <input type="text" class="form-control" id="inputName" placeholder="Your name">
+          <button on-click='activate' class="btn btn-info btn-small">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <p>1 Comments</p>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div id="container" class="row">
+            <div class="col-md-4">
+              <p class="pull-left">
+                <img class="img-circle"src="http://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=48">
+                {{user}}
+                <small>{{comment}}</small>
+              </p>
+            </div>
+            <p class="pull-right">26.01.2015</p>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"> <i class="mdi-communication-chat"></i>
+              </span>
+              <input type="text" class="form-control"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" id="container"></div>
+  </div>
+  </script>
   <script src="scripts/popup.js"></script>
-  <!-- endbuild -->
-  </body>
+
 </html>
