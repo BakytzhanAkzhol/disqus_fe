@@ -66,11 +66,8 @@
           tablink = tab.url;
           flag = false;
           urls = result.urls;
-          console.log(result);
-          console.log('loop starting...');
           for (_i = 0, _len = urls.length; _i < _len; _i++) {
             val = urls[_i];
-            console.log('loop' + _i);
             if (tablink === val.this_url) {
               console.log('Flag true');
               console.log(result.urls[_i].comment_list);
@@ -86,14 +83,12 @@
               break;
             }
           }
-          console.log('loop ending');
           if (!flag) {
             console.log('Flag false');
             urls.push({
               this_url: tablink,
               comment_list: comment_list
             });
-            console.log(urls);
             base_db = {
               u_name: ractive.get('u_name'),
               u_email: ractive.get('u_email'),
@@ -110,7 +105,6 @@
 
   chrome.storage.local.get('value', function(result) {
     result = result.value;
-    console.log(result);
     ractive.set('u_name', result.u_name);
     ractive.set('u_email', result.u_email);
     ractive.set('array_length', (ractive.get('comment_list')).length);
