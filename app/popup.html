@@ -39,37 +39,45 @@
           <h3  class="panel-title">Who are you?</h3>
         </div>
         <div class="panel-body">
-          <input type="email" class="form-control" id="inputEmail" placeholder="Your Email" value="{{uid_email}}">
-          <input type="text" class="form-control" id="inputName" placeholder="{{user}}">
+          <input type="email" class="form-control" id="inputEmail" placeholder="Your Email" value="{{u_email}}">
+          <input type="text" class="form-control" id="inputName" placeholder="Your name" value="{{u_name}}">
           <button on-click='activate' class="btn btn-info btn-small">Submit</button>
         </div>
       </div>
     </div>
-    <div class="row">
+
+    <div class="row" style="overflow:visible">
       <div class="panel panel-info">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <p>1 Comments</p>
+            <p>{{array_length}} Comments</p>
           </h3>
         </div>
-        <div class="panel-body">
-          <div id="container" class="row">
-            <div class="col-md-4">
-              <p class="pull-left">
-                <img class="img-circle"src="http://www.gravatar.com/avatar/{{avatar}}?s=48">
-                {{user}}
-                <small>{{comment}}</small>
-              </p>
-            </div>
-            <p class="pull-right">26.01.2015</p>
-          </div>
+        
+         <div class="panel-body">
+         <div class="list-group">
+          {{#each comment_list}}
+         {{#toReply}}{{/toReply}}
+      <div class="list-group-item">
+        <div class="row-action-primary"> <img class="img-circle" src="http://www.gravatar.com/avatar/{{#toHash}}email{{/toHash}}?s=48"></div>
+        <div class="row-content">
+            <div class="least-content">{{date}}</div>
+            <h4 class="list-group-item-heading">{{name}}</h4>
+            <p class="list-group-item-text">{{comment}}</p>
         </div>
+    </div>
+    <div class="list-group-separator"></div>
+    {{/each}}
+  </div>
+  </div>
+        
+        
         <div class="panel-footer">
           <div class="form-group">
             <div class="input-group">
-              <span class="input-group-addon"> <i class="mdi-communication-chat"></i>
-              </span>
-              <input type="text" class="form-control"></div>
+              
+              <input type="text" class="form-control" value="{{input_comment}}"><span class="input-group-addon"> <i on-click='send_comment' class="mdi-communication-chat"></i>
+              </span></div>
           </div>
         </div>
       </div>
