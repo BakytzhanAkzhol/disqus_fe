@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var base_db, update;
+  var base_db, getUrl, update;
 
   base_db = {
     u_name: '',
@@ -13,7 +13,8 @@
             name: '',
             email: '',
             comment: '',
-            date: ''
+            date: '',
+            avatar: ''
           }
         ]
       }
@@ -33,13 +34,13 @@
         result = result.value;
         return chrome.tabs.getSelected(null, function(tab) {
           var flag, tablink, urls, val, _i, _len;
-          tablink = tab.url;
+          tablink = getUrl(tab.url);
           flag = false;
           urls = result.urls;
-          console.log('Hello, World');
           for (_i = 0, _len = urls.length; _i < _len; _i++) {
             val = urls[_i];
-            if (tablink === val.this_url) {
+            console.log(tablink + " " + getUrl(val.this_url));
+            if (tablink === getUrl(val.this_url)) {
               chrome.browserAction.setBadgeText({
                 text: val.comment_list.length.toString()
               });
@@ -58,6 +59,17 @@
   })(this);
 
   update();
+
+  getUrl = (function(_this) {
+    return function(value) {
+      var d, domain, oth, other, urlN, _ref, _ref1;
+      _ref = value.split('://'), d = _ref[0], other = _ref[1];
+      _ref1 = other.split('/'), domain = _ref1[0], oth = _ref1[1];
+      urlN = d + '://' + domain;
+      console.log(urlN);
+      return urlN;
+    };
+  })(this);
 
   chrome.tabs.onActivated.addListener(function(activeInfo) {
     return update();

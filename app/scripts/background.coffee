@@ -14,6 +14,7 @@ base_db =
           email:''
           comment:''
           date:''
+          avatar:''
         ]
     ]
                 
@@ -26,12 +27,12 @@ update= =>
   chrome.storage.local.get 'value',(result)->
     result=result.value
     chrome.tabs.getSelected null,(tab)->
-      tablink = tab.url
+      tablink = getUrl tab.url
       flag = false
       urls=result.urls
-      console.log 'Hello, World'
       for val in urls
-        if tablink==val.this_url
+        console.log tablink+" "+getUrl val.this_url
+        if tablink==getUrl val.this_url
           chrome.browserAction.setBadgeText {text:val.comment_list.length.toString()}
           flag = true
           break
@@ -39,6 +40,14 @@ update= =>
         chrome.browserAction.setBadgeText {text:'0'}
 
 update()
+
+getUrl = (value)=>
+   [d, other] = (value).split '://'
+   [domain, oth] = other.split '/'
+   urlN = d + '://' + domain
+   console.log urlN
+   urlN
+
 
 chrome.tabs.onActivated.addListener (activeInfo)->
   update()

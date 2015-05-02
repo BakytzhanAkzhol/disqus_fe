@@ -1,6 +1,6 @@
 {
   "name": "sdu-disqus",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "dependencies": {
     "bootstrap": ">=3.0",
     "jquery": ">=1.9.1"

@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var comment_list, ractive;
+  var comment_list, getUrl, ractive;
 
   comment_list = [];
 
@@ -8,15 +8,9 @@
     el: '#container',
     template: '#template',
     data: {
-      u_name: '',
-      u_email: '',
-      comment_list: comment_list,
-      toReply: function() {
-        return alert(Im(alive));
-      },
-      toHash: function(value) {
-        return md5(value);
-      }
+      u_name: 'bigbaak',
+      u_email: 'akzhol_b@bk.ru',
+      comment_list: comment_list
     }
   });
 
@@ -54,16 +48,17 @@
       comment_list.push({
         name: u_name,
         email: u_email,
+        avatar: md5(u_email),
         comment: ractive.get('input_comment'),
         date: date.getDay() + '.' + date.getMonth() + '.' + date.getFullYear()
       });
       ractive.set('comment_list', comment_list);
-      return chrome.storage.local.get('value', function(result) {
+      chrome.storage.local.get('value', function(result) {
         result = result.value;
         console.log(result);
         return chrome.tabs.getSelected(null, function(tab) {
           var base_db, flag, tablink, urls, val, _i, _len;
-          tablink = tab.url;
+          tablink = getUrl(tab.url);
           flag = false;
           urls = result.urls;
           for (_i = 0, _len = urls.length; _i < _len; _i++) {
@@ -100,15 +95,19 @@
           }
         });
       });
+      return ractive.set('input_comment', '');
     };
   })(this));
 
   chrome.storage.local.get('value', function(result) {
     result = result.value;
+    if (typeof result === 'object' && !Object.keys(result).length) {
+      alert('Alert');
+      return;
+    }
     ractive.set('u_name', result.u_name);
     ractive.set('u_email', result.u_email);
     ractive.set('array_length', (ractive.get('comment_list')).length);
-    console.log(ractive.get('comment_list'));
     return chrome.tabs.getSelected(null, function(tab) {
       var flag, tablink, urls, val, _i, _len;
       tablink = tab.url;
@@ -134,5 +133,16 @@
       }
     });
   });
+
+  getUrl = (function(_this) {
+    return function(value) {
+      var d, domain, oth, other, urlN, _ref, _ref1;
+      _ref = value.split('://'), d = _ref[0], other = _ref[1];
+      _ref1 = other.split('/'), domain = _ref1[0], oth = _ref1[1];
+      urlN = d + '://' + domain;
+      console.log(urlN);
+      return urlN;
+    };
+  })(this);
 
 }).call(this);
