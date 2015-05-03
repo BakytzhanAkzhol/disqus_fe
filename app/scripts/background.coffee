@@ -45,7 +45,7 @@ getUrl = (value)=>
    [d, other] = (value).split '://'
    [domain, oth] = other.split '/'
    urlN = d + '://' + domain
-   console.log urlN
+   console.log urlN+" "
    urlN
 
 

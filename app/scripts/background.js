@@ -66,7 +66,7 @@
       _ref = value.split('://'), d = _ref[0], other = _ref[1];
       _ref1 = other.split('/'), domain = _ref1[0], oth = _ref1[1];
       urlN = d + '://' + domain;
-      console.log(urlN);
+      console.log(urlN + " ");
       return urlN;
     };
   })(this);
