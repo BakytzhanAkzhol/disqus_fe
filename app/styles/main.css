@@ -1,16 +1,20 @@
 body, html {
-    height: 600px;
+    min-height: 200px;
+    max-height: 400px;
     width: 400px;
-    overflow: hidden;
 }
-body {
-  /*padding: 20px;*/
+.panel-body{
+  padding:0px;
 }
-
-.panel-body {
-    max-height: 300px;
+.list-group{
+  margin-top:4px;
+  margin-bottom: 0px;
 }
-
-.panel-primary{
-    max-height: 600px;
+.form-group {
+  margin-bottom: 0px;
+}.navbar-default.navbar {
+  background-color: #03a9f4;
+}
+.reply_text{
+  color:#CACECF;
 }
