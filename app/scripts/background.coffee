@@ -29,6 +29,9 @@ chrome.runtime.onInstalled.addListener (details) ->
 update= =>
   chrome.storage.local.get 'value',(result)->
     result=result.value
+    if typeof(result) != 'object' || !Object.keys(result).length>2
+      chrome.storage.local.set {'value': base_db}
+      return
     chrome.tabs.getSelected null,(tab)->
       tablink = getUrl tab.url
       flag = false

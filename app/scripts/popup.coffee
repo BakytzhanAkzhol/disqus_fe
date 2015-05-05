@@ -1,7 +1,23 @@
 'use strict';
 # this script is used in popup.html
 comment_list = []
-replyTo_index = ''
+replyTo_people = ''
+base_db =
+  u_name:''
+  u_email:''
+  urls:
+    [
+      this_url:''
+      comment_list:
+        [
+          name:''
+          email:''
+          comment:''
+          date:''
+          avatar:''
+          reply:''
+        ]
+    ]
 ractive = new Ractive
       el : '#container'
       template : '#template'
@@ -31,6 +47,11 @@ showButtonLoad= (array)=>
     ractive.set 'show_button_load', true
   array
 
+#Функция Reply -> дает возможность отвечаеть на комментарий
+ractive.on 'reply',(event,item,index)->
+  comment_list = ractive.get 'comment_list'
+  replyTo_people = comment_list[index].name 
+  say replyTo_people 
 ractive.on 'activate', =>
   #Берет имя, email, md5(email) и сохраняет в chrome.storage.local
   #с помощью сторонный функция md5 беру hash-тэг email
@@ -67,9 +88,9 @@ ractive.on 'send_comment', =>
       tablink =getUrl tab.url
       flag = false
       urls = result.urls
-      console.log '1'
+      say replyTo_people
+      say 'eRro1'
       for val in urls
-        console.log _i
         if tablink==val.this_url
           ractive.set 'comment_list', result.urls[_i].comment_list 
           comment_list = ractive.get 'comment_list'
@@ -78,7 +99,7 @@ ractive.on 'send_comment', =>
             email:u_email
             avatar:md5(u_email)
             comment:v
-            reply:replyTo_index
+            reply:replyTo_people
             date:date.getDate()+'.'+date.getMonth()+'.'+date.getFullYear()
             })
           result.urls[_i].comment_list =comment_list
@@ -86,7 +107,7 @@ ractive.on 'send_comment', =>
           chrome.browserAction.setBadgeText {text: val.comment_list.length.toString()}
           ractive.set 'array_length',val.comment_list.length.toString()
           flag = true
-          replyTo_index=''
+          replyTo_people=''
           break
       console.log '3'
       if !flag
@@ -115,7 +136,6 @@ ractive.on 'send_comment', =>
         chrome.storage.local.set {'value':base_db}
         console.log 'END'
   #Очищает поля комментарий
-  replyTo_index=''
   ractive.set 'input_comment',''
   
 #При открытые popup.html это функция берет все комментарий 
@@ -126,8 +146,8 @@ chrome.storage.local.get 'value',(result) ->
   say 'Starting get info from Chrome.Storage ... '
   say result
   say '......' 
-  if typeof(result) == 'object' && !Object.keys(result).length
-    alert 'Alert'
+  if typeof(result) != 'object' || !Object.keys(result).length>2
+    chrome.storage.local.set {'value': base_db}
     return
   ractive.set 'u_name',result.u_name
   ractive.set 'u_email',result.u_email
@@ -168,7 +188,3 @@ ractive.on 'load_more',=>
           break
       if !flag
         chrome.browserAction.setBadgeText {text:'0'}
-
-#Функция Reply -> дает возможность отвечаеть на комментарий
-ractive.on 'reply',(event,item,index)->
-  replyTo_index = comment_list[index].name  
