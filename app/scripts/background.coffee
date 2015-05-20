@@ -28,6 +28,7 @@ chrome.runtime.onInstalled.addListener (details) ->
 
 update= =>
   chrome.storage.local.get 'value',(result)->
+    say 'Update'
     result=result.value
     if typeof(result) != 'object' || !Object.keys(result).length>2
       chrome.storage.local.set {'value': base_db}
@@ -51,4 +52,5 @@ update()
 
 
 chrome.tabs.onActivated.addListener (activeInfo)->
+
   update()

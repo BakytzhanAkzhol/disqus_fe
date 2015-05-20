@@ -119,7 +119,7 @@ ractive.on 'send_comment', =>
           email:u_email
           avatar:md5 u_email 
           comment:v
-          reply:replyTo_index
+          reply:replyTo_people
           date:date.getDate()+'.'+date.getMonth()+'.'+date.getFullYear()
         ]
         urls.push({
